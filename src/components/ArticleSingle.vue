@@ -31,7 +31,7 @@ export default class ArticleSingle extends Vue {
     EventBus.$emit('MODAL_DELETE', articleId);
   }
   private dateReformat(createdAt: Date) {
-    const date = createdAt;
+    const date = new Date(createdAt);
     const monthNames = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
     const mnth = monthNames[date.getMonth()];
     const dd = String(date.getDate()).padStart(2, '0');

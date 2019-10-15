@@ -10,6 +10,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import auth from '@/store/modules/auth';
+import article from '@/store/modules/article';
 @Component({
   components: {
     Navbar: () => import('@/components/Layout/Navbar.vue'),
@@ -18,6 +19,7 @@ import auth from '@/store/modules/auth';
 export default class App extends Vue {
   public created() {
     auth.loginCashed();
+    article.loadArticles();
   }
 }
 </script>

@@ -53,17 +53,28 @@ class ArticleModule extends VuexModule {
   @Mutation
   public addNewArticle(article: Article) {
     this.articleList.unshift(article);
+    localStorage.setItem('article', JSON.stringify(this.articleList));
   }
   @Mutation
   public updateArticleInList(payload: Article) {
     const index = this.articleList.findIndex( (article) => article.id === payload.id);
     this.articleList.splice(index, 1);
     this.articleList.splice(index, 0, payload);
+    localStorage.setItem('article', JSON.stringify(this.articleList));
   }
   @Mutation
   public deleteArticle(articleId: string) {
     const index = this.articleList.findIndex( (article) => article.id === articleId);
     this.articleList.splice(index, 1);
+    localStorage.setItem('article', JSON.stringify(this.articleList));
+  }
+  @Mutation
+  public loadArticles() {
+    if (localStorage.getItem('article')) {
+      const articleTmp: string = localStorage.getItem('article')!;
+      const article: Article[] = JSON.parse(articleTmp);
+      this.articleList = article;
+    }
   }
   @Mutation
   public loadSingleArticle(articleId: string) {
