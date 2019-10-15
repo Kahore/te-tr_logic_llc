@@ -14,7 +14,7 @@
           <button
             type="button"
             class="close"
-            @click="closeAction">
+            @click="toggleState">
             <span>×</span></button>
         </div>
         <div class="form-block">
@@ -70,6 +70,9 @@ export default class ArticleModal extends Vue {
   public error: string = '';
   private isLoading: boolean = false;
   private isActive: boolean = false;
+  /**
+   * mounted
+   */
   public mounted() {
     EventBus.$on('MODAL_CALL', (payload?: string) => {
       this.isActive = true;
@@ -81,71 +84,67 @@ export default class ArticleModal extends Vue {
       }
     });
   }
-  public closeAction() {
+  /**
+   * saveAction
+   */
+  public async saveAction() {
+    this.isLoading = true;
+    if (this.article.id === '') {
+      await this.insertArticle();
+    } else {
+      await this.updateArticle();
+    }
+    this.isLoading = false;
+    this.clearField();
     this.toggleState();
   }
-
-  public saveAction() {
-    if (this.article.id === '') {
-      this.insertArticle();
-    } else {
-       this.updateArticle();
-    }
-  }
+  /**
+   * insertArticle
+   */
   public insertArticle() {
-      this.isLoading = true;
-      const data: Article = {
-        id: this.uuid(),
-        title: this.article.title,
-        author: auth.getUser.login,
-        body: this.article.body,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      article.insertArticle(data).then(() => {
-        this.isLoading = false;
-        this.clearField();
-      }).catch((err: string) => {
-        this.error = err;
-      });
-    }
-    /**
-     * updateArticle
-     */
-    public updateArticle() {
-      this.isLoading = true;
-      const data: Article = this.article;
-      article.updateArticle(data).then(() => {
-          this.isLoading = false;
-          this.clearField();
-      });
-    }
-    private avtosize(e: any) {
-      e.srcElement.style.height = '';
-      e.srcElement.style.height = e.srcElement.scrollHeight + 3 + 'px';
-    }
-    private uuid(): string {
-      const crypto = require('crypto');
-      const id = crypto.randomBytes(16).toString('hex');
-      return id;
-    }
-    private loadSingleArticle(articlesId: string) {
-      article.loadSingleArticle(articlesId);
-      const data: Article = article.getArticleSelected;
-      this.article = data;
-    }
-    private toggleState() {
-      this.isActive = ! this.isActive;
-    }
-    private clearField(): void {
-      this.article =  {
-        id: '',
-        author: '',
-        body: '',
-        title: '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-    }
+    const data: Article = {
+      id: this.uuid(),
+      title: this.article.title,
+      author: auth.getUser.login,
+      body: this.article.body,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    article.insertArticle(data);
+  }
+  /**
+   * updateArticle
+   */
+  public updateArticle() {
+    const data: Article = this.article;
+    article.updateArticle(data);
+  }
+  private avtosize(e: any) {
+    e.srcElement.style.height = '';
+    e.srcElement.style.height = e.srcElement.scrollHeight + 3 + 'px';
+  }
+  private uuid(): string {
+    const crypto = require('crypto');
+    const id = crypto.randomBytes(16).toString('hex');
+    return id;
+  }
+  private loadSingleArticle(articlesId: string) {
+    article.loadSingleArticle(articlesId);
+    const data: Article = article.getArticleSelected;
+    this.article = data;
+  }
+  private toggleState() {
+    this.isActive = ! this.isActive;
+  }
+  private clearField(): void {
+    this.article =  {
+      id: '',
+      author: '',
+      body: '',
+      title: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  }
 }
 </script>
