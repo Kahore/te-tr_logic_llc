@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <ArticleList/>
+    <ArticleList :editable="false"/>
   </div>
 </template>
 

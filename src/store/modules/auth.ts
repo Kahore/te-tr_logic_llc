@@ -5,7 +5,7 @@ import { User } from '../model';
 @Module({
   dynamic: true,
   namespaced: true,
-  name: 'users',
+  name: 'auth',
   store,
 })
 class AuthModule extends VuexModule {
