@@ -1,4 +1,4 @@
-# te-tr_logic_llc
+# Test for TR Logic LLC
  [live](https://kahore.github.io/te-tr_logic_llc/)
 
 This project is built with 
