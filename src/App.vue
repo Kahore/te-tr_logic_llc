@@ -1,12 +1,26 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <Navbar/>
     </div>
-    <router-view/>
+    <router-view :key="$route.fullPath"/>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import auth from '@/store/modules/auth';
+@Component({
+  components: {
+    Navbar: () => import('@/components/Layout/Navbar.vue'),
+  },
+})
+export default class App extends Vue {
+  public created() {
+    auth.loginCashed();
+  }
+}
+</script>
 
 <style lang="scss">
 
