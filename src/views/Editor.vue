@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <button class="btn btn-primary" @click="modalCall">Добавить</button>
+    <DeleteModal></DeleteModal>
     <ArticleList :editable="true"></ArticleList>
   </div>
 </template>
@@ -11,6 +12,7 @@ import { EventBus } from '@/EventBus.ts';
 @Component({
   components: {
     ArticleList: () => import('@/components/ArticleList.vue'),
+    DeleteModal: () => import('@/components/DeleteModal.vue'),
   },
 })
 export default class ArticleEditor extends Vue {

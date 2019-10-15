@@ -44,6 +44,11 @@ class ArticleModule extends VuexModule {
   public addNewArticle(article: Article) {
     this.articleList.unshift(article);
   }
+  @Mutation
+  public deleteArticle(articleId: string) {
+    const index = this.articleList.findIndex( (article) => article.id === articleId);
+    this.articleList.splice(index, 1);
+  }
 
   @Action({commit: 'addNewArticle'})
   public async insertArticle(newArt: Article) {

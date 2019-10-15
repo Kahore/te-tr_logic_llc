@@ -11,8 +11,11 @@
           <template v-else>
             <h5 class="modal-title text-center">Внести изменения</h5>
           </template>
-          <button type="button" class="close">
-            <span >×</span></button>
+          <button
+            type="button"
+            class="close"
+            @click="isActive = !isActive">
+            <span>×</span></button>
         </div>
         <div class="form-block">
           <label for="login">Заголовок</label>
