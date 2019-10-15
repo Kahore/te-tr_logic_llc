@@ -1,4 +1,14 @@
 # te-tr_logic_llc
+live at 
+
+- [live](https://kahore.github.io/te-tr_logic_llc/)
+
+This project is built with 
+- [vue-cli](https://github.com/vuejs/vue-cli)
+- [vuex](https://github.com/vuejs/vuex)
+- [vue router](https://github.com/vuejs/vue-router)
+- [typescript](https://www.typescriptlang.org/)
+- [bootstrap 4](https://getbootstrap.com/)
 
 ## Project setup
 ```
@@ -14,16 +24,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
