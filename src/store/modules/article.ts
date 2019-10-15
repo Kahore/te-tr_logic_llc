@@ -36,25 +36,54 @@ class ArticleModule extends VuexModule {
       updatedAt: new Date('2019-09-08T12:14:54.416+00:00'),
     },
   ];
-
+  public articleSelected: Article = {
+    id: '',
+    author: '',
+    body: '',
+    title: '',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
   public get getArticleList(): Article[] {
     return this.articleList;
+  }
+  public get getArticleSelected(): Article {
+    return this.articleSelected;
   }
   @Mutation
   public addNewArticle(article: Article) {
     this.articleList.unshift(article);
   }
   @Mutation
+  public updateArticleInList(payload: Article) {
+    const index = this.articleList.findIndex( (article) => article.id === payload.id);
+    this.articleList.splice(index, 1);
+    this.articleList.splice(index, 0, payload);
+  }
+  @Mutation
   public deleteArticle(articleId: string) {
     const index = this.articleList.findIndex( (article) => article.id === articleId);
     this.articleList.splice(index, 1);
   }
-
+  @Mutation
+  public loadSingleArticle(articleId: string) {
+    const index = this.articleList.findIndex( (article) => article.id === articleId);
+    this.articleSelected = this.articleList[index];
+  }
   @Action({commit: 'addNewArticle'})
   public async insertArticle(newArt: Article) {
+    await delay(500);
     const newArticle = newArt;
     return newArticle;
   }
+  @Action({commit: 'updateArticleInList'})
+  public async updateArticle(article: Article) {
+    await delay(500);
+    return article;
+  }
 }
 
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 export default getModule(ArticleModule);

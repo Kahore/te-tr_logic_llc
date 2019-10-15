@@ -22,7 +22,7 @@ export default class ArticleSingle extends Vue {
    * editAction
    */
   public editAction(articleId: string) {
-    /* * */
+    EventBus.$emit('MODAL_CALL', articleId);
   }
   /**
    * deleteAction

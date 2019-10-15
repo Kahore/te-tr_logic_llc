@@ -5,7 +5,7 @@
     <div class="modal-dialog modal-dialog-centered row pt-5">
       <div class="modal-content p-2">
         <div class="modal-header">
-          <template v-if="id === ''">
+          <template v-if="article.id === ''">
             <h5 class="modal-title text-center">Добавить статью</h5>
           </template>
           <template v-else>
@@ -14,27 +14,29 @@
           <button
             type="button"
             class="close"
-            @click="isActive = !isActive">
+            @click="closeAction">
             <span>×</span></button>
         </div>
         <div class="form-block">
-          <label for="login">Заголовок</label>
+          <label for="articleTitle">Заголовок</label>
             <input
               type="text"
               class="form-control"
               tabindex="1"
-              id="login"
-              v-model="title">
+              id="articleTitle"
+              v-model="article.title">
         </div>
         <div class="form-block">
-          <label for="password">Статья</label>
+          <label for="articleBody">Статья</label>
           <textarea
             type="password"
             class="form-control"
             row="10"
             tabindex="2"
-            id="password"
-            v-model="body"></textarea>
+            id="articleBody"
+            @input="avtosize($event)"
+            @focus="avtosize($event)"
+            v-model="article.body"></textarea>
         </div>
         <div class="form-block pt-2">
           <button
@@ -56,19 +58,35 @@ import { EventBus } from '@/EventBus.ts';
 
 @Component
 export default class ArticleModal extends Vue {
-  public id: string = '';
-  public title: string = '';
-  public body: string = '';
+
+  public article: Article =  {
+    id: '',
+    author: '',
+    body: '',
+    title: '',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
   public error: string = '';
   private isLoading: boolean = false;
   private isActive: boolean = false;
   public mounted() {
-    EventBus.$on('MODAL_CALL', () => {
+    EventBus.$on('MODAL_CALL', (payload?: string) => {
       this.isActive = true;
+      if (typeof payload !== 'undefined') {
+        this.loadSingleArticle(payload);
+      } else {
+        // MEMO: Clear field before adding new article
+        this.clearField();
+      }
     });
   }
+  public closeAction() {
+    this.toggleState();
+  }
+
   public saveAction() {
-    if (this.id === '') {
+    if (this.article.id === '') {
       this.insertArticle();
     } else {
        this.updateArticle();
@@ -78,16 +96,15 @@ export default class ArticleModal extends Vue {
       this.isLoading = true;
       const data: Article = {
         id: this.uuid(),
-        title: this.title,
+        title: this.article.title,
         author: auth.getUser.login,
-        body: this.body,
+        body: this.article.body,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
       article.insertArticle(data).then(() => {
         this.isLoading = false;
         this.clearField();
-        this.$router.push('/');
       }).catch((err: string) => {
         this.error = err;
       });
@@ -96,16 +113,39 @@ export default class ArticleModal extends Vue {
      * updateArticle
      */
     public updateArticle() {
-    // console.log('TCL: ArticleModal -> updateArticle -> updateArticle');
+      this.isLoading = true;
+      const data: Article = this.article;
+      article.updateArticle(data).then(() => {
+          this.isLoading = false;
+          this.clearField();
+      });
+    }
+    private avtosize(e: any) {
+      e.srcElement.style.height = '';
+      e.srcElement.style.height = e.srcElement.scrollHeight + 3 + 'px';
     }
     private uuid(): string {
       const crypto = require('crypto');
       const id = crypto.randomBytes(16).toString('hex');
       return id;
-  }
-  private clearField(): void {
-    this.title = '';
-    this.body = '';
-  }
+    }
+    private loadSingleArticle(articlesId: string) {
+      article.loadSingleArticle(articlesId);
+      const data: Article = article.getArticleSelected;
+      this.article = data;
+    }
+    private toggleState() {
+      this.isActive = ! this.isActive;
+    }
+    private clearField(): void {
+      this.article =  {
+        id: '',
+        author: '',
+        body: '',
+        title: '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+    }
 }
 </script>
