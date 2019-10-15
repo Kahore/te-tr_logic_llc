@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 Vue.config.productionTip = false;
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   routes,
   base: process.env.BASE_URL,
 });
