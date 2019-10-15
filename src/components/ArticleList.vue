@@ -1,12 +1,12 @@
 <template>
-  <div class="hello">
+  <section>
     <ArticleModal></ArticleModal>
     <ArticleSingle
       v-for="article in articles"
       :key="article.id"
       :article="article"
       :editable="editable"/>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">

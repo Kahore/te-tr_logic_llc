@@ -1,30 +1,36 @@
 <template>
-  <form class="form">
-    <div class="form-block">
-      <label for="login">Логин</label>
-      <input
-        type="text"
-        class="form-control"
-        tabindex="1"
-        id="login"
-        v-model="login">
+  <div class="container">
+    <div class="row">
+      <div class="offset-md-3 col-md-6 col-12">
+        <form class="form modal-content p-5 mt-2">
+          <div class="form-block">
+            <label for="login">Логин</label>
+            <input
+              type="text"
+              class="form-control"
+              tabindex="1"
+              id="login"
+              v-model="login">
+          </div>
+          <div class="form-block">
+            <label for="password">Пароль</label>
+            <input
+              type="password"
+              class="form-control"
+              tabindex="2"
+              id="password"
+              v-model="password">
+          </div>
+          <div class="form-block mt-2">
+            <button
+              class="btn btn-primary w-100"
+              :disabled="isLoading"
+              @click.prevent="loginAction">Вход</button>
+          </div>
+        </form>  
+      </div>
     </div>
-    <div class="form-block">
-      <label for="password">Пароль</label>
-      <input
-        type="password"
-        class="form-control"
-        tabindex="2"
-        id="password"
-        v-model="password">
-    </div>
-    <div class="form-block">
-      <button
-        class="btn"
-        :disabled="isLoading"
-        @click.prevent="loginAction">Вход</button>
-    </div>
-  </form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -55,7 +61,3 @@ export default class Login extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

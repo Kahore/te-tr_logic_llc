@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <button class="btn" @click="modalCall">Добавить</button>
+  <div class="container">
+    <button class="btn btn-primary" @click="modalCall">Добавить</button>
     <ArticleList :editable="true"></ArticleList>
   </div>
 </template>

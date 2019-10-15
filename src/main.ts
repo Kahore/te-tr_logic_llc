@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import { routes } from './routes';
 
 import store from './store/store';
-import '@/style/custom.css';
+import '@/assets/styles/app.scss';
 import auth from '@/store/modules/auth';
 import { User } from '@/store/model';
 Vue.use(VueRouter);
