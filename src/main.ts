@@ -33,10 +33,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some((record) => record.meta.requiresGuest)) {
     if (authUser.login !== '') {
       next({
-        path: '/',
-        query: {
-          redirect: to.fullPath,
-        },
+        path: '/editor',
       });
     } else {
       next();
