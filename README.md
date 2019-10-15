@@ -1,7 +1,5 @@
 # te-tr_logic_llc
-live at 
-
-- [live](https://kahore.github.io/te-tr_logic_llc/)
+ [live](https://kahore.github.io/te-tr_logic_llc/)
 
 This project is built with 
 - [vue-cli](https://github.com/vuejs/vue-cli)
