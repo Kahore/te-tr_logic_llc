@@ -53,7 +53,7 @@ export default class Login extends Vue {
     })
     .then(() => {
       this.isLoading = true;
-      this.$router.push('/');
+      this.$router.push('/editor');
     })
     .catch((err) => {
       this.error = 'Invalid username or password';
